@@ -1,0 +1,9 @@
+﻿@model IList<string>
+<div class="property-home image_div">
+    @foreach (var x in Model)
+    {
+        <div><img src="@x" /></div>
+    }
+</div>
+
+@Styles.Render("~/Content/carousal")

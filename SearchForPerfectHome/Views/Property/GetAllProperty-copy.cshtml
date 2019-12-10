@@ -1,0 +1,70 @@
+﻿@model IEnumerable<SearchPerfectHome.Models.PropertyModel>
+@{
+    ViewBag.Title = "GetAllProperty";
+    //WebGrid webGrid = new WebGrid(source: Model, canSort: true, canPage: true);
+    WebGrid webGrid = new WebGrid(source: Model, canPage: true, rowsPerPage: 10);
+    //webGrid.Bind(source: Model, rowCount: ViewBag.TotalRows, autoSortAndPage: false);
+}
+
+<h2>GetAllProperty</h2>
+
+<div>
+
+    @webGrid.GetHtml(
+        mode: WebGridPagerModes.All,
+        tableStyle: "table table-responsive table-bordered",
+        htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: webGrid.Columns(
+                 webGrid.Column(header: "Property Name", format: @<span>@item.Name</span>, style: "CustomerId"),
+                webGrid.Column("filePath", "Image",
+                format:
+                                            @<text>
+                                                <img alt="@item.Name"
+                                                     src="@Url.Content(item.filePath)" style="width:200px;height:200px" />
+                                                <input type="hidden" class="property-id" id="user-property-id" value="@item.PropertyId" />
+                                                <input type="hidden" id="user-property-image-id" value="@item.Id" />
+                                                <br />
+                                            </text>),
+             webGrid.Column(format: @<span>
+                                <input id="view-property-details" type="button" class="btn btn-primary prop-details-btn" value="View Details" />
+                            </span>)
+))
+
+    @*@webGrid.GetHtml(
+                mode: WebGridPagerModes.All,
+                tableStyle: "table table-responsive table-bordered",
+                htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+                columns: webGrid.Columns(
+                         webGrid.Column(header: "Property Name", format: @<span>@item</span>, style: "CustomerId"),
+                webGrid.Column("filePath", "Image",
+                format:
+                                        @<text>
+                                            <img alt="@item.Name"
+                                                 src="@Url.Content(item.filePath)" style="width:200px;height:200px" />
+                                            @Html.Hidden("PropertyId", new { item.PropertyId })
+                                            <input type="hidden" id="user-property-id" value="@item.PropertyId" />
+                                            <input type="hidden" id="user-property-image-id" value="@item.Id" />
+                                            <br />
+                                        </text>),
+                webGrid.Column(format: @<span>
+                        <input id="view-property-details" type="button" class="btn btn-primary" value="View Details" />
+                    </span>)
+        ))*@
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            @*@webGrid.Page(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-small pagination-right")*@
+        </div>
+    </div>
+
+    @*@Html.Hidden("dir", webGrid.SortDirection)
+        @Html.Hidden("col", webGrid.SortColumn)*@
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Property/property.js"></script>
+}
+
+
+

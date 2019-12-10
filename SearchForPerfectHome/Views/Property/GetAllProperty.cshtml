@@ -1,0 +1,86 @@
+﻿@model IPagedList<SearchPerfectHome.Models.PropertyModel>
+
+@{
+    ViewBag.Title = "Property";
+}
+
+@using PagedList;
+@using PagedList.Mvc;
+
+<h2>Property</h2>
+
+@using (Html.BeginForm("GetAllProperty", "Property", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Label("University Name: ", new { @class = "col-md-2 control-label" })
+                @Html.TextBox("Search_Data", ViewBag.FilterValue as string, new { id = "university-name", @class = "form-control col-md-6" })
+                <button type="submit" class="btn btn-primary col-md-1" style="margin-left:2%"> Search </button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Property Id
+        </th>
+        <th>
+            Property Name
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PropertyName)
+            </td>
+
+            <td>
+                @if (item.IndividualImage.filePath != null)
+                {
+                    <img alt="@item.IndividualImage.Name" src="@Url.Content(item.IndividualImage.filePath)" style="width:200px;height:200px" />
+                }
+                else
+                {
+                    <img alt="No Content" style="width:200px;height:200px" />
+                }
+            </td>
+
+            <td>
+                <input type="hidden" id="user-property-id" value="@item.Id" />
+                <input type="hidden" id="user-property-image-id" value="@item.IndividualImage.Id" />
+            </td>
+            <td>
+                <input id="view-property-details" type="button" class="btn btn-primary prop-details-btn" value="View Details" />
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="property-details-modal" tabindex="-1" role="dialog" aria-labelledby="edit-user-title" aria-hidden="true">
+</div>
+
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("GetAllProperty", "Property", new { Page_No, Filter_Value = ViewBag.FilterValue }))
+
+@section scripts{
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script src="~/Scripts/Property/property.js"></script>
+    <script src="~/Scripts/Users/User.js"></script>
+}
+@Styles.Render("~/Content/property")

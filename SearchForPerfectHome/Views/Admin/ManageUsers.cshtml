@@ -1,0 +1,105 @@
+﻿@model IPagedList<SearchPerfectHome.Models.UsersModel>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h3>Manage Users</h3>
+
+@using (Html.BeginForm("ManageUsers", "Admin", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Label("University Name: ", new { @class = "col-md-2 control-label" })
+                @Html.TextBox("Search_Data", ViewBag.FilterValue as string, new { id = "university-name", @class = "form-control col-md-6" })
+                <button type="submit" class="btn btn-primary col-md-1" style="margin-left:2%"> Search </button>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            University
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.University)
+            </td>
+
+            <td>
+                @if (item.ImagePath != null)
+                {
+                    <img alt="@item.ImagePath" src="@Url.Content(item.ImagePath)" style="width:200px;height:200px" />
+                }
+                else
+                {
+                    <img alt="No Content" style="width:200px;height:200px" />
+                }
+            </td>
+
+            <td>
+                <input type="hidden" id="userid" value="@item.UserId" />
+            </td>
+            <td>
+                <input id="view-user-details" type="button" class="btn btn-primary user-details-btn" value="View Details" />
+                <input id="@item.UserId" type="button" class="btn btn-danger delete-user-btn" value="Delete" />
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="user-details-modal" tabindex="-1" role="dialog" aria-labelledby="edit-user-title" aria-hidden="true">
+</div>
+
+<br />
+
+<!-- Bootstrap modal popup -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert alert-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="deleteModalUserLabel">Delete Users</h4>
+            </div>
+            <div class="modal-body">
+                <p class="success-message">Are you sure you wish to delete this record ? </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success delete-confirm">Ok</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of the boostrap modal popup -->
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("ManageUsers", "Admin", new { Page_No, Filter_Value = ViewBag.FilterValue }))
+
+@section scripts{
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script src="~/Scripts/Users/User.js"></script>
+    <script src="~/Scripts/Admin/admin.js"></script>
+}
+@Styles.Render("~/Content/property")

@@ -1,0 +1,15 @@
+﻿.img-circular {
+    width: 20%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+.ui-autocomplete {
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

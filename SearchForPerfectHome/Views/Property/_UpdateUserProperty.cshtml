@@ -1,0 +1,140 @@
+﻿@model SearchPerfectHome.ViewModels.PropertyViewModel
+
+
+@using (Ajax.BeginForm("Update","Property",null, new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "error-msg"
+}, new { id = "update-property-form" , enctype = "multipart/form-data"}))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.PropertyImages.Id)
+    <div class="form-horizontal">
+        <h4>Property Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>Property Name</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.PropertyName, new { @class = "form-control", @maxlength = "128" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>Amenities</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Amenities, new { @class = "form-control", @maxlength = "150" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>Address</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @maxlength = "150" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>City</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", @maxlength = "150" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>State</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.State, new { @class = "form-control", @maxlength = "150" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>University</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.University, new { @class = "form-control", @maxlength = "150" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label>Details</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Details, new { @class = "form-control", @maxlength = "200" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.Property)
+        {
+            @*@Html.HiddenFor(x => x.Property.ForEach(y => y.Id));*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <label>Images</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="file" id="property-image1" name="upload" value="@item.filePath" />
+                            @*@Html.TextBoxFor(model => item.files, "", new { @type = "file", @multiple = "multiple" })
+                            @Html.HiddenFor(model => item.Id);*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => item.files, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => item.files, "", new { @type = "file", @multiple = "multiple" })
+                </div>
+            </div>*@
+        }
+
+    </div>
+    <div class="row">
+        <h5 id="error-msg" class="col-md-offset-2 col-md-9 ErrorMessage"></h5>
+    </div>
+    <button type="submit" class="btn btn-primary" id="update-property">Update</button>
+}

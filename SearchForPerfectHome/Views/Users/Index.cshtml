@@ -1,0 +1,113 @@
+﻿@model SearchPerfectHome.ViewModels.UsersViewModel
+@{
+    ViewBag.Title = "Update User";
+}
+
+<style>
+    .img-circular {
+        width: 20%;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    ul.ui-autocomplete {
+        list-style: none;
+    }
+
+    .ui-autocomplete { height: 100px; overflow-y: scroll; overflow-x: hidden;}
+</style>
+
+
+@using (Html.BeginForm("Update", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    @Html.HiddenFor(x => x.UserId)
+
+<div class="form-horizontal">
+    <h4>Update User Information</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-circular" src="@Url.Content(Model.ImagePath)" alt="Image">
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @id = "user-name" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Interests, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.Interests, new { @class = "form-control", @id = "interests" })
+                @Html.ValidationMessageFor(m => m.Interests, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.University, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.University, new { @class = "form-control", @id = "university-name" })
+                @Html.ValidationMessageFor(m => m.University, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(m => m.Degree, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.Degree, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Degree, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.UserImage, htmlAttributes: new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(model => model.UserImage, "", new { @type = "file", @multiple = "multiple", @class = "form-control" })
+                @*@Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div class="row">
+        <h5 id="user-error-msg" class="col-md-offset-2 col-md-9 ErrorMessage"></h5>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary" id="update-user">Update</button>
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script src="~/Scripts/Users/User.js"></script>
+}
+
+

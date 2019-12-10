@@ -1,0 +1,12 @@
+﻿@model SearchPerfectHome.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" style="background-color: #8a6d3b;">
+    @{ Html.RenderPartial("_carousalPartialView", Model.ImgUrls);}
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/carousal")
+}

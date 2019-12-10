@@ -1,0 +1,66 @@
+﻿@model SearchPerfectHome.Models.UsersModel
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <a href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+            <h4 class="modal-title" id="edit-user-title">User Details</h4>
+            @Html.HiddenFor(model => model.UserId)
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.University, new { @class = "control-label", @id = "lbluniversity" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.University, new { @class = "form-control", @id = "univname", @readonly = true })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.Email, new { @class = "control-label", @id = "lblemail" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @id = "email", @readonly = true })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.Degree, new { @class = "control-label", @id = "lblDegree" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Degree, new { @class = "form-control", @id = "degree", @readonly = true })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.Interests, new { @class = "control-label", @id = "lblInterests" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Interests, new { @class = "form-control", @id = "interests", @readonly = true })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(x => x.Status, new { @class = "control-label", @id = "lblStatus" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Status, new { @class = "form-control", @id = "status", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>

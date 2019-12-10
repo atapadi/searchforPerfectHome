@@ -1,0 +1,55 @@
+﻿@using SearchForPerfectHome.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+<style>
+
+    #password-link{
+        float:right;
+    }
+</style>
+
+
+<div class="account-container stacked">
+    <div id="signinArea" class="content clearfix">
+        <section id="loginForm">
+            <h1>Sign In</h1>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+            {
+                <div class="login-fields">
+                    @Html.AntiForgeryToken()
+                    <p>Use your account to sign in.</p>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="field data-input-focus-ifempty">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg username-field", @placeholder = "User name" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                    </div><!-- User Name -->
+                    <div class="field data-input-focus-ifempty">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg password-field", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div><!-- Password -->
+
+                    <div class="login-actions">
+                        @*<div class="login-checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>*@
+                        <button class="login-action btn btn-primary">Sign In</button>
+                    </div> <!-- Actions -->
+                    @Html.ActionLink("Register as a new user", "Register")
+                    @Html.ActionLink("Forgot Password", "ForgotPassword", null,new {@id="password-link" })
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@Styles.Render("~/Content/logon")

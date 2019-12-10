@@ -1,0 +1,86 @@
+﻿@model IEnumerable<SearchPerfectHome.Models.PropertyImageModel>
+@{
+    ViewBag.Title = "UserProperty";
+    WebGrid webGrid = new WebGrid(source: Model, canSort: false, canPage: false);
+}
+
+<style type="text/css">
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    .Grid {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+    }
+
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
+
+        .Grid th, .Grid td {
+            padding: 5px;
+            width: 150px;
+            border: 1px solid #ccc;
+        }
+
+        .Grid, .Grid table td {
+            border: 0px solid #ccc;
+        }
+
+            .Grid th a, .Grid th a:visited {
+                color: #777;
+            }
+</style>
+
+<br />
+@webGrid.GetHtml(
+
+        htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: webGrid.Columns(
+                 webGrid.Column(header: "Property Name", format: @<span>@item.Name</span>, style: "CustomerId"),
+                webGrid.Column("filePath", "Image",
+                format:
+                                @<text>
+                                    <img alt="@item.Name"
+                                         src="@Url.Content(item.filePath)" style="width:200px;height:200px" />
+                                    @Html.Hidden("PropertyId", new { item.PropertyId })
+                                    <input type="hidden" id="user-property-id" value="@item.PropertyId" />
+                                    <input type="hidden" id="user-property-image-id" value="@item.Id" />
+                                    <br />
+                                </text>),
+               webGrid.Column(format: @<span>
+                                <input id="update-user-property" type="button" class="btn btn-primary update-btn" value="Update" />
+                                <input id="@item.PropertyId" type="button" class="btn btn-danger delete-property-btn" value="Delete" />
+                            </span>)
+))
+
+
+<!-- Bootstrap modal popup -->
+<div class="modal fade" id="deletePropertyModal" tabindex="-1" role="dialog" aria-labelledby="deletePropertyModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="property-modal-header alert alert-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="deletePropertyModal">Delete Property</h4>
+            </div>
+            <div class="modal-body">
+                <p class="property-success-message">Are you sure you wish to delete this record ? </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success property-delete-confirm">Ok</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of the boostrap modal popup -->
+
+@section Scripts
+{
+    <script src="~/Scripts/Property/user-property.js"></script>
+}

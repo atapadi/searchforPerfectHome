@@ -1,0 +1,74 @@
+﻿@using SearchForPerfectHome.Models
+@model ContactusViewModel
+@{
+    ViewBag.Title = "Contact";
+}
+
+
+@if (ViewBag.Message == null)
+{
+    using (Html.BeginForm("Index", "Contactus", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <br />
+        <h4>Contact Us:</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "user-name" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "col-md-offset-2 text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "col-md-offset-2 text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Subject, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "subject" })
+                    @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "col-md-offset-2 text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Message, new { @class = "col-md-2 control-label" })
+                    @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "col-md-offset-2 text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary" id="send-btn">Send</button>
+            </div>
+        </div>
+    }
+}
+
+<div>
+    @if (ViewBag.Message != null)
+    {
+        <br />
+        <div><h4>@ViewBag.Message</h4></div>
+    }
+</div>
+

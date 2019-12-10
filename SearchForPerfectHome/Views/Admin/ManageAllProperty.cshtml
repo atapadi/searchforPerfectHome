@@ -1,0 +1,104 @@
+﻿@model IPagedList<SearchPerfectHome.Models.PropertyModel>
+
+@{
+    ViewBag.Title = "Property";
+}
+
+@using PagedList;
+@using PagedList.Mvc;
+
+<h2>Property</h2>
+
+@using (Html.BeginForm("ManageAllProperty", "Admin", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Label("University Name: ", new { @class = "col-md-2 control-label" })
+                @Html.TextBox("Search_Data", ViewBag.FilterValue as string, new { id = "university-name", @class = "form-control col-md-6" })
+                <button type="submit" class="btn btn-primary col-md-1" style="margin-left:2%"> Search </button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Property Id
+        </th>
+        <th>
+            Property Name
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PropertyName)
+            </td>
+
+            <td>
+                <img alt="@item.IndividualImage.Name" src="@Url.Content(item.IndividualImage.filePath)" style="width:200px;height:200px" />
+            </td>
+
+            <td>
+                <input type="hidden" id="user-property-id" value="@item.Id" />
+                <input type="hidden" id="user-property-image-id" value="@item.IndividualImage.Id" />
+            </td>
+            <td>
+                <input id="view-property-details" type="button" class="btn btn-primary prop-details-btn" value="View Details" />
+                <input id="@item.Id" type="button" class="btn btn-danger delete-property-btn" value="Delete" />
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="property-details-modal" tabindex="-1" role="dialog" aria-labelledby="edit-user-title" aria-hidden="true">
+</div>
+
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("ManageAllProperty", "Admin", new { Page_No, Filter_Value = ViewBag.FilterValue }))
+
+
+<!-- Bootstrap modal popup -->
+<div class="modal fade" id="deletePropertyModal" tabindex="-1" role="dialog" aria-labelledby="deletePropertyModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="property-modal-header alert alert-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="deletePropertyModal">Delete Property</h4>
+            </div>
+            <div class="modal-body">
+                <p class="property-success-message">Are you sure you wish to delete this record ? </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success property-delete-confirm">Ok</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of the boostrap modal popup -->
+
+@section scripts{
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script src="~/Scripts/Property/property.js"></script>
+    <script src="~/Scripts/Users/User.js"></script>
+    <script src="~/Scripts/Property/user-property.js"></script>
+}
+@Styles.Render("~/Content/property")
